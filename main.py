@@ -10,9 +10,9 @@ pi.bb_serial_read_open(RX, 115200)
 
 def getTFminiData():
   while True:
-    #print("#############")
-    time.sleep(0.05)	#change the value if needed
+    time.sleep(0.5)	#change the value if needed
     (count, recv) = pi.bb_serial_read(RX)
+    print("read:", count, recv)
     if count > 8:
       for i in range(0, count-9):
         if recv[i] == 89 and recv[i+1] == 89: # 0x59 is 89
@@ -29,9 +29,12 @@ def getTFminiData():
               # raise ValueError('distance error: %d' % distance)
             #i = i + 9
 
+
 if __name__ == '__main__':
   try:
     getTFminiData()
+    print("worked")
   except:
+    print("failed")
     pi.bb_serial_read_close(RX)
     pi.stop()
